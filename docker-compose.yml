@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+    adonis-server:
+        #find my docker file to build the server
+        build:
+            #dockerfile to build 
+            dockerfile: ./Dockerfile
+            #my dir to start the commands
+            context: ./backend
+        #setting up the container name
+        container_name: adonis-server
+        #port to use
+        ports:
+            - "3333:3333"
+        #network to use on containers
+        networks:
+            - jupiter
+    #Generate MYSQL server
+    mysql-db:
+        #Latest Version of Mysql on Dockerhub
+        image: mysql:latest
+        #identify the container name
+        container_name: mysql-db
+        #mysql server configurations
+        environment: 
+            - MYSQL_USER = docker
+            - MYSQL_PASSWORD = docker
+            - MYSQL_DATABASE = docker
+            - MYSQL_ROOT_PASSWORD = docker
+        #used volumes to persist data on up or kill container [HIGHLY IMPORTANT!!]
+        volumes: 
+            - ./database:/var/lib/mysql
+        #ports to run the service
+        ports:
+            - "3306:3306"
+        #network to use on containers
+        networks: 
+            - jupiter
+
+networks: 
+    jupiter:
+        driver: bridge
