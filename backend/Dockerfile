@@ -16,7 +16,6 @@ USER node
 #install all dependencies
 RUN npm install -qy
 
-
 #expose the 3333 port
 EXPOSE 3333
 
