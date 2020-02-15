@@ -20,6 +20,8 @@ services:
         #network to use on containers
         networks:
             - jupiter
+        depends_on:
+            mysql-db
 
     #Generate Frontend Server
     react-server:
@@ -34,27 +36,29 @@ services:
             - "3000:3000"
         networks: 
             - jupiter
+        depens_on:
+            - adonis-server
     #Generate MYSQL server
-    # mysql-db:
-    #     #Latest Version of Mysql on Dockerhub
-    #     image: mysql:latest
-    #     #identify the container name
-    #     container_name: mysql-db
-    #     #mysql server configurations
-    #     environment: 
-    #         - MYSQL_USER = docker
-    #         - MYSQL_PASSWORD = docker
-    #         - MYSQL_DATABASE = docker
-    #         - MYSQL_ROOT_PASSWORD = docker
-    #     #used volumes to persist data on up or kill container [HIGHLY IMPORTANT!!]
-    #     volumes: 
-    #         - ./database:/var/lib/mysql
-    #     #ports to run the service
-    #     ports:
-    #         - "3306:3306"
-    #     #network to use on containers
-    #     networks: 
-    #         - jupiter
+    mysql-db:
+        #Latest Version of Mysql on Dockerhub
+        image: mysql:latest
+        #identify the container name
+        container_name: mysql-db
+        #mysql server configurations
+        environment: 
+            - MYSQL_USER = docker
+            - MYSQL_PASSWORD = docker
+            - MYSQL_DATABASE = docker
+            - MYSQL_ROOT_PASSWORD = docker
+        #used volumes to persist data on up or kill container [HIGHLY IMPORTANT!!]
+        volumes: 
+            - ./database:/var/lib/mysql
+        #ports to run the service
+        ports:
+            - "3306:3306"
+        #network to use on containers
+        networks: 
+            - jupiter
 
 networks: 
     jupiter:
